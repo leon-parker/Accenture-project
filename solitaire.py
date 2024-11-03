@@ -1,5 +1,6 @@
 from card_elements import Card, Deck, Pile
 from codecarbon import EmissionsTracker
+import random
 
 with EmissionsTracker() as tracker:
 
@@ -10,7 +11,11 @@ with EmissionsTracker() as tracker:
 
         def __init__(self):
             self.value_ranks = {value: index for index, value in enumerate(self.values)}
+            
+            # Shuffle deck at initialization for randomness
             self.deck = Deck(self.values, self.suits)
+            random.shuffle(self.deck.cards)
+            
             self.playPiles = [self._initialize_pile(i) for i in range(self.numPlayPiles)]
             self.blockPiles = {suit: Pile() for suit in self.suits}
             self.deck.cards[0].flip()
@@ -108,5 +113,6 @@ with EmissionsTracker() as tracker:
             print("Sorry, you did not win")
 
     main()
+
 
 
